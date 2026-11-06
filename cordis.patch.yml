@@ -1,0 +1,3 @@
+- insert:
+    - id: delete-archived-session
+      name: dsh-delete-archived-session

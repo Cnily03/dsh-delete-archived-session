@@ -1,0 +1,82 @@
+{
+  "name": "dsh-delete-archived-session",
+  "version": "1.0.0",
+  "description": "Two-step permanent delete for archived DeepSeek Harness sessions.",
+  "type": "module",
+  "license": "MIT",
+  "author": "Cnily03",
+  "homepage": "https://github.com/Cnily03/dsh-delete-archived-session#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Cnily03/dsh-delete-archived-session.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Cnily03/dsh-delete-archived-session/issues"
+  },
+  "keywords": [
+    "dsh",
+    "dsh-plugin",
+    "deepseek-harness",
+    "cordis",
+    "plugin",
+    "session",
+    "session-management",
+    "archive",
+    "delete",
+    "sidebar",
+    "ui"
+  ],
+  "exports": {
+    ".": "./dist/index.js",
+    "./client": "./dist/client.js",
+    "./locale/*.json": "./locale/*.json",
+    "./icon": "./icon.svg"
+  },
+  "files": [
+    "dist",
+    "cordis.patch.yml",
+    "locale/*.json",
+    "icon.svg"
+  ],
+  "scripts": {
+    "postinstall": "biome migrate --write",
+    "prepare": "pnpm build",
+    "build": "tsup",
+    "dev": "tsup --watch",
+    "typecheck": "tsc --noEmit",
+    "test": "node --test tests/",
+    "format": "biome check --write",
+    "lint": "biome lint",
+    "prepublishOnly": "pnpm build"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "^2.5.14",
+    "@types/node": "^24.6.0",
+    "tsup": "^8.5.0",
+    "typescript": "^5.9.2"
+  },
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    },
+    "client": {
+      "platform": "web",
+      "immediately": true,
+      "inject": [
+        "@deepseek-ai/dsh-api-session-controller",
+        "@deepseek-ai/dsh-client-locale",
+        "@deepseek-ai/dsh-client-ui-primitives",
+        "@deepseek-ai/dsh-client-ui-renderer",
+        "@deepseek-ai/dsh-client-ui-workspace"
+      ]
+    }
+  },
+  "devEngines": {
+    "runtime": {
+      "name": "node",
+      "version": "^24.0.0",
+      "onFail": "download"
+    }
+  },
+  "packageManager": "pnpm@11.28.5"
+}
