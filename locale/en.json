@@ -1,0 +1,21 @@
+{
+  "meta": {
+    "title": "Delete Archived Session",
+    "description": "Adds a two-step delete control to archived Session rows in the sidebar hover strip and \"...\" menu, stops the Session's running work, and removes the Session log from disk."
+  },
+  "row": {
+    "title": "Delete archived session",
+    "armTitle": "Permanently delete",
+    "aria": "Delete archived session {name}",
+    "armAria": "Permanently delete archived session {name}",
+    "busyAria": "Deleting archived session {name}"
+  },
+  "menu": {
+    "title": "Delete archived session",
+    "armTitle": "Permanently delete"
+  },
+  "notice": {
+    "failed": "Could not delete the Session: {reason}",
+    "notArchived": "The Session is no longer archived."
+  }
+}

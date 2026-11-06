@@ -1,0 +1,21 @@
+{
+  "meta": {
+    "title": "删除归档会话",
+    "description": "在侧栏悬停按钮和“…”菜单中为归档会话添加两步确认的删除入口，停止该会话正在进行的工作，并彻底删除本地会话文件。"
+  },
+  "row": {
+    "title": "删除归档会话",
+    "armTitle": "彻底删除",
+    "aria": "删除归档会话 {name}",
+    "armAria": "彻底删除归档会话 {name}",
+    "busyAria": "正在删除归档会话 {name}"
+  },
+  "menu": {
+    "title": "删除归档会话",
+    "armTitle": "彻底删除"
+  },
+  "notice": {
+    "failed": "无法删除该会话：{reason}",
+    "notArchived": "该会话已不再处于归档状态。"
+  }
+}
