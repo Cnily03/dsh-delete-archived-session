@@ -49,7 +49,7 @@ A session must be archived before it can be deleted. Archiving alone does not st
 pnpm install
 pnpm build        # tsup -> dist/
 pnpm typecheck    # tsc --noEmit
-pnpm test         # node --test
+pnpm lint         # biome lint
 pnpm format       # biome check --write
 ```
 

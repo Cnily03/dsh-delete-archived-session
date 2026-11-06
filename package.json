@@ -44,7 +44,6 @@
     "build": "tsup",
     "dev": "tsup --watch",
     "typecheck": "tsc --noEmit",
-    "test": "node --test tests/",
     "format": "biome check --write",
     "lint": "biome lint",
     "prepublishOnly": "pnpm build"

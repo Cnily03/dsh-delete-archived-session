@@ -49,7 +49,7 @@ dsh plugin --profile web add github:Cnily03/dsh-delete-archived-session
 pnpm install
 pnpm build        # tsup -> dist/
 pnpm typecheck    # tsc --noEmit
-pnpm test         # node --test
+pnpm lint         # biome lint
 pnpm format       # biome check --write
 ```
 
