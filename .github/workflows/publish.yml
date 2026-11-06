@@ -1,0 +1,120 @@
+name: Publish
+
+on:
+  release:
+    types: [published]
+  push:
+    tags: ["v*"]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: publish-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    outputs:
+      name: ${{ steps.meta.outputs.name }}
+      version: ${{ steps.meta.outputs.version }}
+      file: ${{ steps.pack.outputs.file }}
+    steps:
+      - uses: actions/checkout@v7
+      - uses: pnpm/setup@v3
+        with:
+          require-lockfile: true
+      - id: meta
+        name: Check tag matches package version
+        run: |
+          name=$(node -p "require('./package.json').name")
+          version=$(node -p "require('./package.json').version")
+          if [ "$GITHUB_REF_TYPE" = tag ] && [ "${GITHUB_REF_NAME#v}" != "$version" ]; then
+            echo "::error::tag $GITHUB_REF_NAME does not match package.json version $version"
+            exit 1
+          fi
+          echo "name=$name" >> "$GITHUB_OUTPUT"
+          echo "version=$version" >> "$GITHUB_OUTPUT"
+      - id: pack
+        run: |
+          pnpm pack --pack-destination out
+          echo "file=$(basename out/*.tgz)" >> "$GITHUB_OUTPUT"
+      - uses: actions/upload-artifact@v7
+        with:
+          path: out/${{ steps.pack.outputs.file }}
+          archive: false
+          if-no-files-found: error
+
+  npm:
+    name: Publish to npm
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - uses: actions/checkout@v7
+      - uses: pnpm/setup@v3
+        with:
+          install: false
+      - uses: actions/download-artifact@v8
+        with:
+          name: ${{ needs.build.outputs.file }}
+      - name: Publish with trusted publishing (OIDC)
+        env:
+          SPEC: ${{ needs.build.outputs.name }}@${{ needs.build.outputs.version }}
+          FILE: ${{ needs.build.outputs.file }}
+        run: |
+          if pnpm view "$SPEC" version >/dev/null 2>&1; then
+            echo "$SPEC is already on npm, skipping"
+            exit 0
+          fi
+          pnpm publish "./$FILE" --access public --ignore-scripts --no-git-checks
+
+  github:
+    name: Publish to GitHub Packages
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - uses: actions/checkout@v7
+      - uses: pnpm/setup@v3
+        with:
+          install: false
+      - uses: actions/download-artifact@v8
+        with:
+          name: ${{ needs.build.outputs.file }}
+      - name: Scope the package to the repository owner
+        id: scope
+        env:
+          FILE: ${{ needs.build.outputs.file }}
+        run: |
+          mkdir -p scoped && tar -xzf "./$FILE" -C scoped
+          owner=$(echo "$GITHUB_REPOSITORY_OWNER" | tr '[:upper:]' '[:lower:]')
+          name="@$owner/${{ needs.build.outputs.name }}"
+          node -e "
+            const fs = require('fs')
+            const file = 'scoped/package/package.json'
+            const pkg = JSON.parse(fs.readFileSync(file, 'utf8'))
+            pkg.name = process.argv[1]
+            fs.writeFileSync(file, JSON.stringify(pkg, null, 2) + '\n')
+          " "$name"
+          echo "spec=$name@${{ needs.build.outputs.version }}" >> "$GITHUB_OUTPUT"
+      - name: Publish
+        env:
+          REGISTRY: https://npm.pkg.github.com
+          TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SPEC: ${{ steps.scope.outputs.spec }}
+        run: |
+          echo "//npm.pkg.github.com/:_authToken=$TOKEN" > scoped/package/.npmrc
+          cd scoped/package
+          if pnpm view "$SPEC" version --registry "$REGISTRY" >/dev/null 2>&1; then
+            echo "$SPEC is already on GitHub Packages, skipping"
+            exit 0
+          fi
+          pnpm publish --registry "$REGISTRY" --ignore-scripts --no-git-checks
