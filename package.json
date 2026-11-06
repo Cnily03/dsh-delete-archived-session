@@ -39,7 +39,7 @@
     "icon.svg"
   ],
   "scripts": {
-    "postinstall": "biome migrate --write",
+    "postinstall": "biome migrate --write || true",
     "prepare": "pnpm build",
     "build": "tsup",
     "dev": "tsup --watch",
