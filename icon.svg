@@ -1,15 +1,27 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32" role="img" aria-label="Archived session delete">
+<svg width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Delete Archived Session">
+  <g mask="url(#cut)">
+    <rect x="7.5" y="8" width="21" height="6" rx="1.8" fill="#7CB7FF" />
+    <path d="M9 15.5H27V25.2C27 26.7464 25.7464 28 24.2 28H11.8C10.2536 28 9 26.7464 9 25.2V15.5Z" fill="url(#a)" fill-opacity="0.9" />
+    <path d="M15.1 19.5H20.9" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" />
+  </g>
+  <g transform="translate(28 26) scale(0.72) translate(-29 -24.9)">
+    <path d="M23.6 20.6H34.4" stroke="#FF5C5C" stroke-width="2" stroke-linecap="round" />
+    <path d="M27.2 20.6V19.5C27.2 18.9477 27.6477 18.5 28.2 18.5H29.8C30.3523 18.5 30.8 18.9477 30.8 19.5V20.6" stroke="#FF5C5C" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
+    <path d="M24.6 22.2H33.4L32.6 30.1C32.53 30.77 31.97 31.3 31.3 31.3H26.7C26.03 31.3 25.47 30.77 25.4 30.1L24.6 22.2Z" fill="#FF5C5C" />
+    <path d="M27.75 24.5V29M30.25 24.5V29" stroke="#FFFFFF" stroke-width="1.1" stroke-linecap="round" />
+  </g>
   <defs>
-    <linearGradient id="adsd-bg" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0" stop-color="#3b3f46"/>
-      <stop offset="1" stop-color="#22262b"/>
+    <linearGradient id="a" x1="18" y1="15.5" x2="18" y2="28" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#7CB7FF" />
+      <stop offset="1" stop-color="#145AF3" />
     </linearGradient>
+    <mask id="cut" maskUnits="userSpaceOnUse" x="0" y="0" width="36" height="36">
+      <rect width="36" height="36" fill="#FFFFFF" />
+      <g transform="translate(28 26) scale(0.72) translate(-29 -24.9)" stroke="#000000" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M23.6 20.6H34.4" stroke-width="5.9" />
+        <path d="M27.2 20.6V19.5C27.2 18.9477 27.6477 18.5 28.2 18.5H29.8C30.3523 18.5 30.8 18.9477 30.8 19.5V20.6" stroke-width="5.5" />
+        <path d="M24.6 22.2H33.4L32.6 30.1C32.53 30.77 31.97 31.3 31.3 31.3H26.7C26.03 31.3 25.47 30.77 25.4 30.1L24.6 22.2Z" fill="#000000" stroke-width="3.9" />
+      </g>
+    </mask>
   </defs>
-  <rect x="1" y="1" width="30" height="30" rx="8" fill="url(#adsd-bg)" stroke="#5b616a" stroke-width="1"/>
-  <path d="M9 11.5h14" fill="none" stroke="#c9ced4" stroke-width="1.6" stroke-linecap="round"/>
-  <path d="M13 11.5V9.4a1.2 1.2 0 0 1 1.2-1.2h3.6a1.2 1.2 0 0 1 1.2 1.2v2.1" fill="none" stroke="#c9ced4" stroke-width="1.6" stroke-linecap="round"/>
-  <path d="M11.2 11.5v10.1a1.6 1.6 0 0 0 1.6 1.6h6.4a1.6 1.6 0 0 0 1.6-1.6V11.5" fill="none" stroke="#c9ced4" stroke-width="1.6" stroke-linecap="round"/>
-  <path d="M14.2 14.6v5.2M17.8 14.6v5.2" fill="none" stroke="#e0605e" stroke-width="1.6" stroke-linecap="round"/>
-  <circle cx="24" cy="8" r="2.6" fill="#e0605e"/>
-  <path d="M22.6 8h2.8" stroke="#1c1f23" stroke-width="1.2" stroke-linecap="round"/>
 </svg>
