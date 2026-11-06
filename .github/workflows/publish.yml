@@ -1,8 +1,6 @@
 name: Publish
 
 on:
-  release:
-    types: [published]
   push:
     tags: ["v*"]
   workflow_dispatch:
@@ -49,7 +47,7 @@ jobs:
           if-no-files-found: error
 
   npm:
-    name: Publish to npm
+    name: Npm Registry
     needs: build
     runs-on: ubuntu-latest
     permissions:
@@ -75,7 +73,7 @@ jobs:
           pnpm publish "./$FILE" --access public --ignore-scripts --no-git-checks
 
   github:
-    name: Publish to GitHub Packages
+    name: GitHub Packages
     needs: build
     runs-on: ubuntu-latest
     permissions:
