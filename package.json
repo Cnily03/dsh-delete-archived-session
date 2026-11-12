@@ -1,6 +1,6 @@
 {
   "name": "dsh-delete-archived-session",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Two-step permanent delete for archived DeepSeek Harness sessions.",
   "type": "module",
   "license": "MIT",
